@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/textstyle.dart';
 import '../../widgets/widgets.dart';
+ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -81,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: EdgeInsets.fromLTRB(20.w, 125.h, 20.w, 20.h),
               children: 
               [
-                Image.asset('assets/AccountProfile.png',height: 60.h,),
+                SvgPicture.asset("assets/AccountProfile_svg.svg"),
                 SizedBox(height: 8.h,),
                 Text(userName,textAlign: TextAlign.center,style: GiveStyle().pageHeading(),),
                 SizedBox(height: 16.h,),
@@ -146,8 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: 
             [
-              // Icon(Icons.account_circle_rounded,color: GiveStyle().secondary,size: 50,)
-              Center(child: Image.asset('assets/ProfilePic.png')),
+              Center(child: SvgPicture.asset("assets/ProfilePic_svg.svg")),
               SizedBox(height: 20.h,),
               Row
               (

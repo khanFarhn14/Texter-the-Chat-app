@@ -36,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.6.0
+  flutter_svg: ^1.1.6
   keyboard_dismisser: ^3.0.0
   shared_preferences: ^2.0.15
   web_socket_channel: ^1.1.0
@@ -62,10 +63,10 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/SignUpImage.png
-    - assets/LoginImage.png
-    - assets/AccountProfile.png
-    - assets/ProfilePic.png
+    - assets/SignUpImage_svg.svg
+    - assets/LoginImage_svg.svg
+    - assets/ProfilePic_svg.svg
+    - assets/AccountProfile_svg.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

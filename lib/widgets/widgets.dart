@@ -116,65 +116,63 @@ class CallToAction extends StatelessWidget {
       child: SizedBox
       (
         // width: 300.w,
-        height: 200.h,
+        height: 180.h,
         child: Center
         (
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16,),
-            child: Column
-            (
-              children: 
-              [
-                Text("Logout",style: GiveStyle().ctaHeading()),
+          child: Column
+          (
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: 
+            [
+              Text("Logout",style: GiveStyle().ctaHeading()),
 
-                SizedBox(height: 4.h,),
+              SizedBox(height: 4.h,),
 
-                Text("Would you like to log out?",style: GiveStyle().normal().copyWith(color: GiveStyle().secondary_70)),
+              Text("Would you like to log out?",style: GiveStyle().normal().copyWith(color: GiveStyle().secondary_70)),
 
-                SizedBox(height: 16.h,),
+              SizedBox(height: 16.h,),
 
-                //Log Out Button
-                GestureDetector
+              //Log Out Button
+              GestureDetector
+              (
+                onTap: (() async{
+                  await authService.signOut();
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const LoginPage()), (route) => false);
+                }),
+                child: Container
                 (
-                  onTap: (() async{
-                    await authService.signOut();
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const LoginPage()), (route) => false);
-                  }),
-                  child: Container
+                  decoration: BoxDecoration
                   (
-                    decoration: BoxDecoration
-                    (
-                      color: GiveStyle().cta,
-                      borderRadius: BorderRadius.circular(5.r),
-                
-                    ),
-                    child: Padding 
-                    (
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      child: Text("Log Out",style: GiveStyle().normal().copyWith(color: GiveStyle().dominant,fontFamily: 'Product Sans Bold'),)
-                      
-                    ),
+                    color: GiveStyle().cta,
+                    borderRadius: BorderRadius.circular(5.r),
+              
                   ),
-                ),
-                
-                SizedBox(height: 4.h,),
-                
-                //Cancel button
-                GestureDetector
-                (
-                  onTap: (() {
-                    // print("Tapped");
-                    Navigator.pop(context);
-                  }),
                   child: Padding 
                   (
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: Text("Cancel",style: GiveStyle().normal().copyWith(color: GiveStyle().secondary_70),)
+                    child: Text("Log Out",style: GiveStyle().normal().copyWith(color: GiveStyle().dominant,fontFamily: 'Product Sans Bold'),)
+                    
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              
+              SizedBox(height: 8.h,),
+              
+              //Cancel button
+              GestureDetector
+              (
+                onTap: (() {
+                  // print("Tapped");
+                  Navigator.pop(context);
+                }),
+                child: Padding 
+                (
+                  padding: const EdgeInsets.fromLTRB(20,10,20,10),
+                  child: Text("Cancel",style: GiveStyle().normal().copyWith(color: GiveStyle().secondary_70),)
+                ),
+              )
+            ],
           ),
         )
       ),

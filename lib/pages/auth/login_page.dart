@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 import '../../helper/helper_function.dart';
@@ -64,12 +65,11 @@ class _LoginPageState extends State<LoginPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: 
                   [
-                    Center(child: Image.asset("assets/LoginImage.png")),
+                    Center(child: SvgPicture.asset('assets/LoginImage_svg.svg')),
                     SizedBox(height: 8.h,),
 
-                  Center(child: Text("Welcome back to Texter",style: GiveStyle().pageIntro().copyWith(color: GiveStyle().cta),)),
-                  SizedBox(height: thrityTwo.h,),
-
+                    Center(child: Text("Welcome back to Texter",style: GiveStyle().pageIntro().copyWith(color: GiveStyle().cta),)),
+                    SizedBox(height: thrityTwo.h,),
 
                     Text
                     (

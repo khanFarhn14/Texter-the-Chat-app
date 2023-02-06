@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -65,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: 
                 [
                   
-                  Center(child: Image.asset("assets/SignUpImage.png")),
+                  Center(child: SvgPicture.asset('assets/SignUpImage_svg.svg')),
                   SizedBox(height:8.h),
                   //Welcome back to Texxter
                   Center(child: Text("Welcome to Texter",style: GiveStyle().pageIntro().copyWith(color: GiveStyle().cta),)),
