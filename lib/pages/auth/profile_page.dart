@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   {
                     showDialog(context: context, builder: (context)
                     {
-                      return const CallToAction();
+                      return const CallToActionLogOut();
                     });
                     // authService.signOut().whenComplete(() => nextScreenReplace(context, const LoginPage()));
                   },

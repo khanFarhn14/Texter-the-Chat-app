@@ -2,10 +2,13 @@ import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/pages/auth/profile_page.dart';
 import 'package:chat_app/pages/auth/search_page.dart';
 import 'package:chat_app/service/auth_service.dart';
+import 'package:chat_app/service/database_service.dart';
 import 'package:chat_app/widgets/textstyle.dart';
 import 'package:chat_app/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,10 +17,14 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> 
+{
   String userName = "";
   String email = "";
   AuthService authService = AuthService();
+  Stream? groups;
+  bool _isLoading = false;
+  String groupName = "";
 
   @override
   void initState()
@@ -49,8 +56,16 @@ class _HomePageState extends State<HomePage> {
         });
       }
     );
+
+    //Getting the list of snapshots in our stream
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).getUserGroups().then((snapshots){
+      setState(() {
+        groups = snapshots;
+      });
+    });
   }
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) 
+  {
     return Theme
     (
       data: ThemeData(primaryIconTheme: IconThemeData(color: GiveStyle().secondary)),
@@ -89,7 +104,8 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.fromLTRB(20.w, 125.h, 20.w, 20.h),
             children: 
             [
-              Image.asset('assets/AccountProfile.png',height: 60.h,),
+              SvgPicture.asset("assets/AccountProfile_svg.svg"),
+
               SizedBox(height: 8.h,),
               Text(userName,textAlign: TextAlign.center,style: GiveStyle().pageHeading(),),
               SizedBox(height: 16.h,),
@@ -129,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                 {
                   showDialog(context: context, builder: (context)
                   {
-                    return const CallToAction();
+                    return const CallToActionLogOut();
                   });
                   // authService.signOut().whenComplete(() => nextScreenReplace(context, const LoginPage()));
                 },
@@ -141,7 +157,181 @@ class _HomePageState extends State<HomePage> {
             ],
           )
         ),
+
+        body: groupList(),
+        floatingActionButton: FloatingActionButton
+        (
+          onPressed: ()
+          {
+            // CallToActionCreateGroup(context);
+            showDialog(context: context, builder: (context)
+            {
+              return CallToActionCreateGroup(_isLoading);
+            });
+          },
+          elevation: 0,
+          backgroundColor: GiveStyle().cta,
+          child: Icon(Icons.add,color: GiveStyle().dominant,size: 30,),
+        ),
       ),
     );
   }
+
+  //Group List Function
+  groupList()
+  {
+    return StreamBuilder
+    (
+      stream: groups,
+      builder: (context, AsyncSnapshot snapshot)
+      {
+        //Make some checks
+        if(snapshot.hasData)
+        {
+          if(snapshot.data['groups'] != null)
+          {
+            if(snapshot.data['groups'].length != 0)
+            {
+              return const Text("Hello");
+            }else{
+              return noGroupWidget();
+            }
+
+          }else{
+            return noGroupWidget();
+          }
+        }else{
+          return Center(child: CircularProgressIndicator(color: GiveStyle().cta));
+        }
+      },
+    );
+  }
+
+  noGroupWidget()
+  {
+    return Container
+    (
+      padding: EdgeInsets.symmetric(vertical: 34.h, horizontal: 20.w),
+      child: Column
+      (
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: 
+        [
+          GestureDetector
+          (
+            onTap: () {
+              showDialog(context: context, builder: (context)
+              {
+                return CallToActionCreateGroup(_isLoading);
+              });
+            },
+            child: Center
+            (
+              child: SvgPicture.asset("assets/CreateRoom.svg",color: GiveStyle().secondary,)
+            )
+          ),
+          SizedBox(height: 16.h,),
+          Center(child: Text("Create Room",style: GiveStyle().normal())),
+        ],
+      )
+    );
+  }
+
+  Dialog CallToActionCreateGroup(bool isLoading)
+  {
+    return Dialog
+    (
+      shape: RoundedRectangleBorder
+        (
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: GiveStyle().secondary_70,width: 2),
+        ),
+        backgroundColor: GiveStyle().dominant,
+        child: SizedBox
+        (
+          height: 180.h,
+          child: Center
+          (
+            child: Padding
+            (
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 30.w),
+              child: Column
+              (
+                children: 
+                [
+                  isLoading == true ? Center(child: CircularProgressIndicator(color: GiveStyle().cta)):
+                  Text("Enter a Room Name",style: GiveStyle().ctaHeading()),
+                  TextField
+                  (
+                    
+                    onChanged: (val)
+                    {
+                      setState(() {
+                        groupName = val;
+                        print(groupName);
+                      });
+                    },
+
+                    style: GiveStyle().inputText(),
+                    decoration: InputDecoration
+                    (
+                      contentPadding: EdgeInsets.symmetric(vertical: 15.h,horizontal: 10.w),
+                      labelStyle: GiveStyle().labelText().copyWith(color: GiveStyle().secondary_70),
+                      filled: true,
+                      fillColor: GiveStyle().secondary_20,
+
+                      enabledBorder: OutlineInputBorder
+                      (
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none,
+                      ),
+
+                      focusedBorder: OutlineInputBorder
+                      (
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide
+                        (
+                          color: GiveStyle().secondary,
+                          width: 1.8,
+                        )
+                      ),
+
+                      errorBorder: OutlineInputBorder
+                      (
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide
+                        (
+                          color: Color(0xFFF47979),
+                          width: 1.9
+                        )
+                      ),
+
+
+                      focusedErrorBorder: OutlineInputBorder
+                      (
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide
+                        (
+                          color: Color(0xFFF47979),
+                          width: 1.9
+                        )
+                      ),
+
+                      errorStyle: GiveStyle().labelText().copyWith
+                      (
+                        color: const Color(0xffFFA5A5),
+                      )
+                    )
+                  )
+                  
+                ],
+              )
+            )
+          ),
+        )
+    );
+  }
 }
+
+// ignore: non_constant_identifier_names

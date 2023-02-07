@@ -99,8 +99,8 @@ void showSnackbar(context, color, message)
 
 
 //Call to Action for Logout
-class CallToAction extends StatelessWidget {
-  const CallToAction({super.key});
+class CallToActionLogOut extends StatelessWidget {
+  const CallToActionLogOut({super.key});
 
   @override
   Widget build(BuildContext context) {
