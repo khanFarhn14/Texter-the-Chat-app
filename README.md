@@ -1,16 +1,11 @@
-# chat_app
+![Logo](https://user-images.githubusercontent.com/98305427/216836702-5ca1b497-3b9e-499d-ae5b-7c1a03edf201.png)
+# Texter the Chat Application
 
-A new Flutter project.
+The Texter chat application is built with Flutter using Firebase as a backend.
 
-## Getting Started
+## Features
+- Responsive UI
+- Cross platform
+- Chat rooms for multiple friends
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Undergoing...
