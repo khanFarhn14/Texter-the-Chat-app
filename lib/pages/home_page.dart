@@ -3,6 +3,7 @@ import 'package:chat_app/pages/auth/profile_page.dart';
 import 'package:chat_app/pages/auth/search_page.dart';
 import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/service/database_service.dart';
+import 'package:chat_app/widgets/group_tile.dart';
 import 'package:chat_app/widgets/textstyle.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +32,19 @@ class _HomePageState extends State<HomePage>
   {
     super.initState();
     gettingUserData();
+  }
+
+  //String Manipulation
+  //Getting User Id
+  String getId(String res)
+  {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  //Getting user Name
+  String getName(String res)
+  {
+    return res.substring(res.indexOf("_")+1);
   }
 
   gettingUserData() async
@@ -147,7 +161,6 @@ class _HomePageState extends State<HomePage>
                   {
                     return const CallToActionLogOut();
                   });
-                  // authService.signOut().whenComplete(() => nextScreenReplace(context, const LoginPage()));
                 },
                 selectedColor: GiveStyle().secondary_50,
                 selected: true,
@@ -192,7 +205,14 @@ class _HomePageState extends State<HomePage>
           {
             if(snapshot.data['groups'].length != 0)
             {
-              return const Text("Hello");
+              return ListView.builder
+              (
+                itemCount: snapshot.data['groups'].length,
+                itemBuilder: ((context, index) {
+                  int revIndex = snapshot.data['groups'].length - index -1;
+                  return GroupTile(userName: snapshot.data['fullName'], groupId: getId(snapshot.data['groups'][revIndex]), groupName: getName(snapshot.data['groups'][revIndex]));
+                })
+              );
             }else{
               return noGroupWidget();
             }
@@ -251,82 +271,149 @@ class _HomePageState extends State<HomePage>
         child: SizedBox
         (
           height: 180.h,
-          child: Center
+          child: Padding
           (
-            child: Padding
+            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 30.w),
+            child: Column
             (
-              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 30.w),
-              child: Column
-              (
-                children: 
-                [
-                  isLoading == true ? Center(child: CircularProgressIndicator(color: GiveStyle().cta)):
-                  Text("Enter a Room Name",style: GiveStyle().ctaHeading()),
-                  TextField
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: 
+              [
+                // isLoading == true ? Center(child: CircularProgressIndicator(color: GiveStyle().cta)):
+                //Create a room
+                Text("Create a room",style: GiveStyle().ctaHeading()),
+
+                SizedBox(height: 8.h,),
+
+                TextField
+                (
+                  
+                  onChanged: (val)
+                  {
+                    setState(() {
+                      groupName = val;
+                      // print(groupName);
+                    });
+                  },
+
+                  style: GiveStyle().inputText(),
+                  decoration: InputDecoration
                   (
-                    
-                    onChanged: (val)
-                    {
-                      setState(() {
-                        groupName = val;
-                        print(groupName);
-                      });
-                    },
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.h,horizontal: 10.w),
+                    labelStyle: GiveStyle().labelText().copyWith(color: GiveStyle().secondary_70),
+                    filled: true,
+                    fillColor: GiveStyle().secondary_20,
 
-                    style: GiveStyle().inputText(),
-                    decoration: InputDecoration
+                    enabledBorder: OutlineInputBorder
                     (
-                      contentPadding: EdgeInsets.symmetric(vertical: 15.h,horizontal: 10.w),
-                      labelStyle: GiveStyle().labelText().copyWith(color: GiveStyle().secondary_70),
-                      filled: true,
-                      fillColor: GiveStyle().secondary_20,
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide.none,
+                    ),
 
-                      enabledBorder: OutlineInputBorder
+                    focusedBorder: OutlineInputBorder
+                    (
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide
                       (
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-
-                      focusedBorder: OutlineInputBorder
-                      (
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide
-                        (
-                          color: GiveStyle().secondary,
-                          width: 1.8,
-                        )
-                      ),
-
-                      errorBorder: OutlineInputBorder
-                      (
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide
-                        (
-                          color: Color(0xFFF47979),
-                          width: 1.9
-                        )
-                      ),
-
-
-                      focusedErrorBorder: OutlineInputBorder
-                      (
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide
-                        (
-                          color: Color(0xFFF47979),
-                          width: 1.9
-                        )
-                      ),
-
-                      errorStyle: GiveStyle().labelText().copyWith
-                      (
-                        color: const Color(0xffFFA5A5),
+                        color: GiveStyle().secondary,
+                        width: 1.8,
                       )
+                    ),
+
+                    errorBorder: OutlineInputBorder
+                    (
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: const BorderSide
+                      (
+                        color: Color(0xFFF47979),
+                        width: 1.9
+                      )
+                    ),
+
+
+                    focusedErrorBorder: OutlineInputBorder
+                    (
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: const BorderSide
+                      (
+                        color: Color(0xFFF47979),
+                        width: 1.9
+                      )
+                    ),
+
+                    errorStyle: GiveStyle().labelText().copyWith
+                    (
+                      color: const Color(0xffFFA5A5),
                     )
                   )
-                  
-                ],
-              )
+                ),
+
+                SizedBox(height: 16.h,),
+
+                Row
+                (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: 
+                  [
+                    //Cancel Button
+                    GestureDetector
+                    (
+                      onTap: (() {
+                        // print("Tapped on Cancel Button");
+                        Navigator.pop(context);
+                      }),
+                      child: Container
+                      (
+                        decoration: BoxDecoration
+                        (
+                          // color: GiveStyle().cta,
+                          borderRadius: BorderRadius.circular(5.r),
+                          border: Border.all(color: GiveStyle().cta)
+                    
+                        ),
+                        child: Padding 
+                        (
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Text("Cancel",style: GiveStyle().normal().copyWith(color: GiveStyle().cta,fontFamily: 'Product Sans Bold'),)
+                          
+                        ),
+                      ),
+                    ),
+
+                    //Create Button
+                    GestureDetector
+                    (
+                      onTap: (() async{
+                        if(groupName.isNotEmpty)
+                        {
+                          setState((() => _isLoading = true));
+                          // print("Done creating Group");
+                          DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).createGroup(userName, FirebaseAuth.instance.currentUser!.uid, groupName).whenComplete(() => _isLoading = false);
+                          Navigator.of(context).pop();
+                          showSnackbar(context, Colors.green, "The group has been created");
+                        }
+                      }),
+                      child: Container
+                      (
+                        decoration: BoxDecoration
+                        (
+                          color: GiveStyle().cta,
+                          borderRadius: BorderRadius.circular(5.r),
+                    
+                        ),
+                        child: Padding 
+                        (
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Text("Create",style: GiveStyle().normal().copyWith(color: GiveStyle().dominant,fontFamily: 'Product Sans Bold'),)
+                          
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+
+                
+              ],
             )
           ),
         )
