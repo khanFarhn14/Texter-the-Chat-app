@@ -1,8 +1,13 @@
+import 'dart:core';
 import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/service/auth_service.dart';
+import 'package:chat_app/service/database_service.dart';
 import 'package:chat_app/widgets/textstyle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../pages/home_page.dart';
 
 var textInputDecoration = InputDecoration
 (
@@ -152,6 +157,96 @@ class CallToActionLogOut extends StatelessWidget {
                   (
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Text("Log Out",style: GiveStyle().normal().copyWith(color: GiveStyle().dominant,fontFamily: 'Product Sans Bold'),)
+                    
+                  ),
+                ),
+              ),
+              
+              SizedBox(height: 8.h,),
+              
+              //Cancel button
+              GestureDetector
+              (
+                onTap: (() {
+                  // print("Tapped");
+                  Navigator.pop(context);
+                }),
+                child: Padding 
+                (
+                  padding: const EdgeInsets.fromLTRB(20,10,20,10),
+                  child: Text("Cancel",style: GiveStyle().normal().copyWith(color: GiveStyle().secondary_70),)
+                ),
+              )
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+
+//Call to Action for Exiting Room
+// ignore: must_be_immutable
+class CallToActionExitRoom extends StatefulWidget {
+  String groupId = "";
+  String adminName = "";
+  String groupName = "";
+  CallToActionExitRoom({super.key, required this.groupId, required this.adminName, required this.groupName});
+
+  
+  @override
+  State<CallToActionExitRoom> createState() => _CallToActionExitRoomState();
+}
+
+class _CallToActionExitRoomState extends State<CallToActionExitRoom> {
+  @override
+  Widget build(BuildContext context) {
+    AuthService authService = AuthService();
+    return Dialog
+    (
+      shape: RoundedRectangleBorder
+      (
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(color: GiveStyle().secondary_70,width: 2),
+      ),
+      backgroundColor: GiveStyle().dominant,
+      child: SizedBox
+      (
+        // width: 300.w,
+        height: 180.h,
+        child: Center
+        (
+          child: Column
+          (
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: 
+            [
+              Text("Exit Room",style: GiveStyle().ctaHeading()),
+
+              SizedBox(height: 4.h,),
+
+              Text("Would you like to Exit the Room?",style: GiveStyle().normal().copyWith(color: GiveStyle().secondary_70)),
+
+              SizedBox(height: 16.h,),
+
+              //Log Out Button
+              GestureDetector
+              (
+                onTap: (() async{
+                  DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).toggleGroupJoin(widget.groupId, widget.adminName, widget.groupName).whenComplete(() => nextScreenReplace(context, const HomePage()));
+                }),
+                child: Container
+                (
+                  decoration: BoxDecoration
+                  (
+                    color: GiveStyle().cta,
+                    borderRadius: BorderRadius.circular(5.r),
+              
+                  ),
+                  child: Padding 
+                  (
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    child: Text("Exit",style: GiveStyle().normal().copyWith(color: GiveStyle().dominant,fontFamily: 'Product Sans Bold'),)
                     
                   ),
                 ),

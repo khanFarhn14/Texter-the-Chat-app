@@ -143,8 +143,6 @@ class _ProfilePageState extends State<ProfilePage> {
           padding: EdgeInsets.symmetric(vertical: 62.h, horizontal: 16.w),
           child: Column
           (
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: 
             [
               Center(child: SvgPicture.asset("assets/ProfilePic_svg.svg")),

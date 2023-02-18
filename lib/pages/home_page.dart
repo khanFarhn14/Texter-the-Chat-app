@@ -258,6 +258,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
+  // ignore: non_constant_identifier_names
   Dialog CallToActionCreateGroup(bool isLoading)
   {
     return Dialog
@@ -292,7 +293,6 @@ class _HomePageState extends State<HomePage>
                   {
                     setState(() {
                       groupName = val;
-                      // print(groupName);
                     });
                   },
 
@@ -359,17 +359,14 @@ class _HomePageState extends State<HomePage>
                     GestureDetector
                     (
                       onTap: (() {
-                        // print("Tapped on Cancel Button");
                         Navigator.pop(context);
                       }),
                       child: Container
                       (
                         decoration: BoxDecoration
                         (
-                          // color: GiveStyle().cta,
                           borderRadius: BorderRadius.circular(5.r),
                           border: Border.all(color: GiveStyle().cta)
-                    
                         ),
                         child: Padding 
                         (
@@ -387,7 +384,6 @@ class _HomePageState extends State<HomePage>
                         if(groupName.isNotEmpty)
                         {
                           setState((() => _isLoading = true));
-                          // print("Done creating Group");
                           DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).createGroup(userName, FirebaseAuth.instance.currentUser!.uid, groupName).whenComplete(() => _isLoading = false);
                           Navigator.of(context).pop();
                           showSnackbar(context, Colors.green, "The group has been created");
@@ -405,14 +401,11 @@ class _HomePageState extends State<HomePage>
                         (
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Text("Create",style: GiveStyle().normal().copyWith(color: GiveStyle().dominant,fontFamily: 'Product Sans Bold'),)
-                          
                         ),
                       ),
                     ),
                   ],
                 )
-
-                
               ],
             )
           ),
