@@ -11,6 +11,10 @@ The Texter chat application is built with Flutter using Firebase as a backend.
 ## UI Guide
 ![PRESENTATION UI GUIDE](https://user-images.githubusercontent.com/98305427/219958324-9b31205b-57fd-4194-89ae-1dc46d5cef44.png)
 
+## Working of Chat app video
+
+https://user-images.githubusercontent.com/98305427/221114184-daa2f19f-6bf1-4f38-ba52-5131b6e9712f.mp4
+
 ## Color Reference
 ### Used 60-30-10 Rule
 
