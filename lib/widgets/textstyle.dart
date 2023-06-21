@@ -13,7 +13,6 @@ class GiveStyle
   final secondary_20 = const Color(0xffF4FEFD).withOpacity(0.2);
   final cta = const Color(0xff16BD9F);
 
-
   //Page Intro
   TextStyle pageIntro()
   {

@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-
 import '../../widgets/textstyle.dart';
 import '../../widgets/widgets.dart';
 
@@ -45,6 +44,7 @@ class _ChatPageState extends State<ChatPage> {
       });
     });
   }
+  @override
   Widget build(BuildContext context) {
     return KeyboardDismisser
     (

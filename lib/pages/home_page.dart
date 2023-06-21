@@ -413,5 +413,3 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
-
-// ignore: non_constant_identifier_names

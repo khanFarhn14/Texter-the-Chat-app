@@ -2,7 +2,6 @@ import 'package:chat_app/service/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../widgets/textstyle.dart';
 import '../../widgets/widgets.dart';
 
@@ -41,6 +40,7 @@ class _GroupInfoState extends State<GroupInfo> {
       });
     });
   }
+  @override
   Widget build(BuildContext context) {
     return Theme
     (
