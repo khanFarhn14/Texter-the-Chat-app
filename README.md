@@ -1,24 +1,13 @@
-<!-- ![Logo](https://user-images.githubusercontent.com/98305427/216836702-5ca1b497-3b9e-499d-ae5b-7c1a03edf201.png) -->
-<p align="center"><img src="https://user-images.githubusercontent.com/98305427/216836702-5ca1b497-3b9e-499d-ae5b-7c1a03edf201.png" alt="Logo of Texter the chat app" /> </p>
-
 # Texter the Chat Application
 
 The Texter chat application is built with Flutter using Firebase as a backend.
 
+
 ## Prototype Screenshots
-![Prototype](https://user-images.githubusercontent.com/98305427/219958223-4c505d8e-8327-4427-951b-156b3d14e0c1.png)
+<p align="center"><img src="assets/presentation/PRESENTATION.png" alt="Logo of Texter the chat app"/> </p>
 
 ## UI Guide
-![PRESENTATION UI GUIDE](https://user-images.githubusercontent.com/98305427/219958324-9b31205b-57fd-4194-89ae-1dc46d5cef44.png)
-
-## Color Reference
-### Used 60-30-10 Rule
-
-The **Primary** or **Dominant** color is ![#1B2223](https://via.placeholder.com/10/1B2223?text=+) `#1B2223`
-
-The **Secondary** color is ![#F4FEFD](https://via.placeholder.com/10/F4FEFD?text=+) `#F4FEFD`
-
-The **CTA** (Call to Action) color is ![#16BD9F](https://via.placeholder.com/10/16BD9F?text=+) `#16BD9F`
+<p align="center"><img src="assets/presentation/PRESENTATION%20UI%20GUIDE.png" alt="Logo of Texter the chat app"/> </p>
 
 ## Environment Variables
 
@@ -27,7 +16,43 @@ To run this project, you will need to add the following Extensions to your VS co
 `Pubspec Assist`
 
 It will give you the ability to add all the packages from VS code windows only
-![pubspec assist](https://user-images.githubusercontent.com/98305427/221100536-b303981a-e35f-4721-90bd-755007678186.png)
+
+## Dependencies
+1. Firebase Authentication
+```
+flutter pub add firebase_auth
+```
+
+2. Cloud Firestore
+```
+flutter pub add cloud_firestore
+```
+
+3. Firebase Core
+```
+flutter pub add firebase_core
+```
+
+4. Flutter Screen Util
+```
+flutter pub add flutter_screenutil
+```
+
+5. Flutter SVG
+```
+flutter pub add flutter_svg
+```
+
+6. Keyboard dismisser
+```
+flutter pub add keyboard_dismisser
+```
+
+7. Shared Preferences
+```
+flutter pub add shared_preferences
+```
+
 
 ## Reference
 
